@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+    <f:view locale="#{facesContext.externalContext.requestLocale}">
+        <h:head>
+            <title><h:outputText value="#{msjs['pagina.cabecera']} - #{msjs['login.pagina.titulo']}" /></title>
+            <meta charset="utf-8" />
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+            <meta name="description" content="" />
+            <meta name="author" content="" />
+            <h:outputStylesheet library="webjars"
+                                name="bootstrap/4.0.0-2/css/bootstrap-reboot.min-jsf.css" />
+            <h:outputStylesheet library="webjars"
+                                name="bootstrap/4.0.0-2/css/bootstrap.min-jsf.css" />
+            <h:outputStylesheet name="/css/floating-labels.css" />
+            <h:outputScript library="webjars" name="jquery/3.3.1-1/jquery.js" />
+            <h:outputScript library="webjars" name="popper.js/1.12.9-1/umd/popper.min.js" />
+            <h:outputScript library="webjars" name="bootstrap/4.0.0-2/js/bootstrap.min.js" />
+            <h:outputScript name="/js/validate.js" />
+            <f:metadata>
+                <f:viewAction action="#{login.isLoggedInForwardHome()}" />
+            </f:metadata>
+        </h:head>
+        <h:body>
+            <h:form id="login"  class="form-signin needs-validation" pt:novalidate="true">
+                <div class="text-center mb-4">
+                    <img class="mb-4"
+                         src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg"
+                         alt="" width="72" height="72" />
+                    <h1 class="h3 mb-3 font-weight-normal">#{msjs.titulo_principal}</h1>
+                    <p>
+                        Build form controls with floating labels via the
+                        <code>:placeholder-shown</code>
+                        pseudo-element. <a
+                            href="https://caniuse.com/#feat=css-placeholder-shown">Works
+                            in latest Chrome, Safari, and Firefox.</a>
+                    </p>
+                </div>
+                <div class="form-label-group">
+                    <h:inputText id="inputUsername" value="#{login.username}"
+                                 styleClass="form-control #{login.userNameInputValid ? 'is-valid': 'is-invalid'}" required="true"
+                                 pt:placeholder="#{msjs['login.form.usuario.placeholder']}" pt:autofocus="autofocus" />
+                    <h:outputLabel value="#{msjs['login.form.usuario']}" for="inputUsername" />
+                    <h:message errorClass="d-block invalid-feedback" for="inputUsername" />
+                </div>
+                <div class="form-label-group">
+                    <h:inputSecret id="inputPassword" value="#{login.password}"
+                                   styleClass="form-control #{login.passwordInputValid ? 'is-valid': 'is-invalid'}" 
+                                   pt:placeholder="#{msjs['login.form.contrasena.placeholder']}"
+                                   required="true" />
+                    <h:outputLabel value="#{msjs['login.form.contrasena']}" for="inputPassword" />
+                    <h:message errorClass="d-block invalid-feedback" for="inputPassword" />                    
+                </div>
+                <div class="checkbox mb-3">
+                    <div class="custom-control custom-checkbox">
+                        <h:selectBooleanCheckbox id="remember" value="remember-me" styleClass="custom-control-input" />
+                        <h:outputLabel value="#{msjs['login.form.recordar']}"
+                                       for="remember" styleClass="custom-control-label" />
+                    </div>
+                </div>			
+                <h:commandButton styleClass="btn btn-lg btn-primary btn-block"
+                                 value="#{msjs.form_boton_ingresar}" action="#{login.autenticar()}" />
+                <p class="mt-5 mb-3 text-muted text-center">                    
+                </p>
+            </h:form>
+        </h:body>
+    </f:view>
+</html>

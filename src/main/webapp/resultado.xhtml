@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	locale="#{facesContext.externalContext.requestLocale}"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:composition template="/shared/layout.xhtml">
+		<ui:define name="breadcrumb">
+			<h:form>
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><h:commandLink
+								value="#{msjs['operacion.principal']}"
+								action="#{clienteBean.principal()}" /></li>
+						<li class="breadcrumb-item active" aria-current="page">#{msjs['operacion.registro']}</li>
+						<li class="breadcrumb-item active" aria-current="page">#{msjs['operacion.resultado.titulo']}</li>
+					</ol>
+				</nav>
+			</h:form>
+		</ui:define>
+		<ui:define name="body">
+			<div class="my-3 p-3 bg-white rounded box-shadow">
+				<h6 class="border-bottom border-gray pb-2 mb-0">
+					<i class="fa fa-tasks mr-2"></i>
+					#{msjs['operacion.resultado.titulo']} <i
+						class="fa fa-angle-right mr-2"></i>
+					<h:outputText rendered="#{clienteBean.cliente != null}"
+						value="#{msjs['operacion.resultado.exito']}" />
+					<i jsf:rendered="#{clienteBean.cliente != null}"
+						class="fa fa-thumbs-o-up ml-2"></i>
+					<h:outputText rendered="#{clienteBean.cliente == null}"
+						value="#{msjs['operacion.resultado.error']}" />
+					<i jsf:rendered="#{clienteBean.cliente == null}"
+						class="fa fa-thumbs-o-down ml-2"></i>
+				</h6>
+				<div class="pt-3">
+					<h:form rendered="#{clienteBean.cliente == null}">
+						<div class="card mb-3 border-danger">
+							<div class="card-header bg-transparent border-danger">#{msjs['operacion.resultado.titulo']}</div>
+							<div class="card-body text-danger">
+								<h5 class="card-title">#{msjs['operacion.resultado.error']}:</h5>
+								<p class="card-text">#{msjs['operacion.resultado.error.mensaje']}</p>
+							</div>
+						</div>
+						<h:commandButton value="#{msjs['enlace.volver']}"
+							action="#{clienteBean.listar}" styleClass="d-none btn btn-danger" />
+						<button type="submit" jsf:action="#{clienteBean.listar}"
+							jsf:process="@form" class="btn btn-danger mr-2">
+							<i class="fa fa-chevron-left mr-2"></i> #{msjs['enlace.volver']}
+						</button>
+					</h:form>
+
+					<h:form rendered="#{clienteBean.cliente != null}">
+						<div class="form-group">
+							<h:outputLabel value="#{msjsCliente['formulario.nombre']}:" />
+							<h:outputText value="#{clienteBean.cliente.nombre}"
+								styleClass="form-control" />
+						</div>
+
+						<div class="form-group">
+							<h:outputLabel value="#{msjsCliente['formulario.apellido']}:" />
+							<h:outputText value="#{clienteBean.cliente.apellido}"
+								styleClass="form-control" />
+						</div>
+
+						<div class="form-group">
+							<h:outputLabel value="#{msjsCliente['formulario.genero']}:" />
+							<h:selectOneRadio value="#{clienteBean.cliente.genero}"
+								disabled="true">
+								<f:selectItems value="#{listados.generos}" />
+							</h:selectOneRadio>
+						</div>
+
+						<div class="form-group">
+							<h:outputLabel value="#{msjsCliente['formulario.profesion']}:" />
+							<h:selectOneListbox value="#{clienteBean.cliente.profesion}"
+								size="1" disabled="true" styleClass="custom-select">
+								<f:selectItems value="#{listados.profesiones}" />
+							</h:selectOneListbox>
+							<h:outputText value="#{clienteBean.mensaje}" />
+						</div>
+
+						<div class="form-group">
+							<h:outputLabel value="#{msjsCliente['formulario.numeroMovil']}:" />
+							<h:outputText value="#{clienteBean.cliente.numeroMovil}"
+								styleClass="form-control" />
+						</div>
+
+						<div class="form-group">
+							<div class="custom-control custom-checkbox">
+								<h:selectBooleanCheckbox id="publicidad"
+									value="#{clienteBean.cliente.publicidad}" pt:disabled="true"
+									styleClass="custom-control-input" />
+								<h:outputLabel value="#{msjsCliente['formulario.publicidad']}"
+									for="publicidad" styleClass="custom-control-label" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<h:outputLabel
+								value="#{msjsCliente['formulario.correoElectronico']}:" />
+							<h:outputText value="#{clienteBean.cliente.correo}"
+								styleClass="form-control" />
+						</div>
+
+						<div class="form-group">
+							<h:outputLabel
+								value="#{msjsCliente['formulario.numeroDocumento']}:" />
+							<h:outputText value="#{clienteBean.cliente.numeroDocumento}"
+								styleClass="form-control" />
+						</div>
+
+						<div class="form-group">
+							<h:outputLabel
+								value="#{msjsCliente['formulario.cantidadHijos']}:" />
+							<h:outputText value="#{clienteBean.cliente.cantidadHijos}"
+								styleClass="form-control" />
+						</div>
+
+						<div class="form-group">
+							<h:outputLabel
+								value="#{msjsCliente['formulario.fechaNacimiento']}:" />
+							<h:outputText value="#{clienteBean.cliente.fechaNacimiento}"
+								styleClass="form-control">
+								<f:convertDateTime dateStyle="long" />
+							</h:outputText>
+						</div>
+
+						<div class="form-group">
+							<button type="submit" jsf:action="#{clienteBean.listar}"
+								jsf:process="@form" class="btn btn-info mr-2">
+								<i class="fa fa-chevron-left mr-2"></i> #{msjs['enlace.volver']}
+							</button>
+						</div>
+					</h:form>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</f:view>

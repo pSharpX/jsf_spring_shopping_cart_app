@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        locale="#{facesContext.externalContext.requestLocale}"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/shared/layout.xhtml">
+        <ui:define name="breadcrumb">
+            <h:form>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <h:commandLink value="#{msjs['operacion.principal']}" action="#{clienteBean.principal()}" />
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">#{msjs['operacion.detalle']}</li>
+                    </ol>
+                </nav>
+            </h:form>
+        </ui:define>
+        <ui:define name="body">
+            <div class="my-3 p-3 bg-white rounded box-shadow">
+                <h6 class="border-bottom border-gray pb-2 mb-0"><i class="fa fa-file-text mr-2"></i>#{msjs['operacion.detalle']}</h6>
+                <div class="pt-3">
+                    <h:panelGroup layout="block" rendered="#{productoBean.producto == null}">
+                        <div class="alert alert-danger" role="alert">#{msjsCliente['mensaje.cliente.error']}</div>
+                    </h:panelGroup>
+                    <h:form class="form" rendered="#{productoBean.producto != null}">
+                        <div class="form-group">
+                            <h:outputLabel value="Nombre:" for="nombre" />
+                            <h:inputText value="#{productoBean.producto.nombre}"
+                                         styleClass="form-control" id="nombre" pt:readonly="true"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Descripcion:" for="descripcion" />
+                            <h:inputText value="#{productoBean.producto.descripcion}"
+                                         styleClass="form-control" id="descripcion" pt:readonly="true" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Categoria:" for="categoria" />
+                            <h:inputText id="categoria" value="#{productoBean.producto.categoria}"
+                                         styleClass="form-control" pt:readonly="true" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Precio:" for="precio" />
+                            <h:inputText id="precio" value="#{productoBean.producto.precio}"
+                                         styleClass="form-control" pt:readonly="true" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:commandLink action="#{productoBean.editar(productoBean.producto.id)}" immediate="true" class="btn btn-primary" role="button">
+                                <h:outputFormat value="#{msjs['enlace.editar']}">
+                                    <f:param value="Producto" />
+                                </h:outputFormat>
+                                <i class="fa fa-edit ml-2"></i>
+                            </h:commandLink>
+                            <a jsf:action="#{productoBean.listar()}" jsf:immediate="true" jsf:process="@none" class="btn btn-info ml-2" href="#" role="button">
+                                <i class="fa fa-chevron-left mr-2"></i>#{msjs['enlace.volver']}
+                            </a>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</f:view>

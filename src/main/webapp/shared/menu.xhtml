@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        locale="#{facesContext.externalContext.requestLocale}"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">
+            <i class="fa fa-bars mr-2"></i>
+            <h:outputText value="#{msjs.titulo_opciones}" />
+        </h6>
+        <h:form>
+            <div class="media text-muted pt-3">            
+                <i class="fa fa-plus-square fa-2x mr-2"></i>
+                <p
+                    class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">
+                        <h:commandLink action="#{clienteBean.crear()}">
+                            <h:outputFormat value="#{msjs['enlace.nuevo']}">
+                                <f:param value="#{msjs.modulo_cliente}" />
+                            </h:outputFormat>
+                        </h:commandLink>
+                    </strong> Donec id
+                    elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac
+                    cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+                    justo sit amet risus.
+                </p>
+            </div>
+            <div class="media text-muted pt-3">            
+                <i class="fa fa-folder fa-2x mr-2"></i>
+                <p
+                    class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">
+                        <h:commandLink action="#{reporte.consultar()}"
+                                       actionListener="#{reporte.confirmarAccion}">
+                            <h:outputFormat value="#{msjs['enlace.listar.nuevos']}">
+                                <f:param value="#{msjs['modulo.cliente.plural']}" />
+                            </h:outputFormat>
+                            <f:attribute name="tipo" value="nuevo" />
+                            <f:attribute name="titulo" value="Clientes Nuevos" />
+                        </h:commandLink>
+                    </strong> Donec id
+                    elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac
+                    cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+                    justo sit amet risus.
+                </p>
+            </div>
+            <div class="media text-muted pt-3">            
+                <i class="fa fa-trophy fa-2x mr-2"></i>
+                <p
+                    class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">
+                        <h:commandLink action="#{productoBean.listar()}">
+                            <h:outputFormat value="#{msjs['enlace.listar.tops']}">
+                                <f:param value="Productos" />
+                            </h:outputFormat>
+                        </h:commandLink>
+                    </strong> Donec id
+                    elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac
+                    cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+                    justo sit amet risus.
+                </p>
+            </div>
+            <div class="media text-muted pt-3">            
+                <i class="fa fa-database fa-2x mr-2"></i>
+                <p
+                    class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">
+                        <h:commandLink action="#{clienteBean.listar()}">
+                            <h:outputFormat value="#{msjs['enlace.listar']}">
+                                <f:param value="#{msjs['modulo.cliente.plural']}" />
+                            </h:outputFormat>
+                        </h:commandLink>
+                    </strong> Donec id
+                    elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac
+                    cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+                    justo sit amet risus.
+                </p>
+            </div>
+        </h:form>        
+    </div>
+</f:view>

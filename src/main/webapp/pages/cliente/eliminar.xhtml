@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        locale="#{facesContext.externalContext.requestLocale}"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/shared/layout.xhtml">
+        <ui:define name="breadcrumb">
+            <h:form>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <h:commandLink value="#{msjs['operacion.principal']}" action="#{clienteBean.principal()}" />
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">#{msjs['operacion.eliminacion']}</li>
+                    </ol>
+                </nav>
+            </h:form>
+        </ui:define>
+        <ui:define name="body">
+            <div class="my-3 p-3 bg-white rounded box-shadow">
+                <h6 class="border-bottom border-gray pb-2 mb-0"><i class="fa fa-exclamation-triangle"></i> #{msjs['operacion.eliminacion']}</h6>
+                <div class="pt-3">
+                    <h:panelGroup layout="block" rendered="#{clienteBean.cliente == null}">
+                        <div class="alert alert-danger" role="alert">#{msjsCliente['mensaje.cliente.error']}</div>
+                    </h:panelGroup>
+                    <h:form rendered="#{clienteBean.cliente != null}">
+                        <h:inputHidden value="#{clienteBean.cliente.codigo}" />
+                        <div class="card mb-3 border-danger">
+                            <div class="card-header bg-transparent border-danger">#{msjsCliente['formulario.eliminar.title']}</div>
+                            <div class="card-body text-danger">
+                                <h5 class="card-title">#{msjsCliente['formulario.eliminar.message']}:</h5>
+                                <p class="card-text">#{clienteBean.cliente.apellido}, #{clienteBean.cliente.nombre} (#{clienteBean.cliente.numeroMovil})</p>
+                            </div>
+                        </div>
+                        <h:commandButton value="#{msjsCliente['formulario.boton.eliminar']}"
+                                         action="#{clienteBean.confirmarEliminar(clienteBean.cliente.codigo)}" styleClass="d-none btn btn-danger" />
+                        <button type="submit" jsf:action="#{clienteBean.confirmarEliminar(clienteBean.cliente.codigo)}" jsf:process="@form" class="btn btn-danger mr-2">
+                            #{msjsCliente['formulario.boton.eliminar']}<i class="fa fa-trash ml-2"></i>
+                        </button>
+                    </h:form>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</f:view>

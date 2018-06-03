@@ -1,0 +1,1 @@
+web: java -jar target/jsfcrudapplication-1.0.0.war

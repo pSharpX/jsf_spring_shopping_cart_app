@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        locale="#{facesContext.externalContext.requestLocale}"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:composition>
+        <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+            <h:form>
+                <a jsf:action="#{clienteBean.principal()}" class="navbar-brand" href="#"><h:outputText value="JAVA MASTER DEVELOPER" /></a>
+            </h:form>            
+            <button class="navbar-toggler p-0 border-0" type="button"
+                    data-toggle="offcanvas">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse"
+                 id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active"><a class="nav-link" href="#">Dashboard
+                            <span class="sr-only">(current)</span>
+                        </a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Notifications</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#">Profile</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#">Switch
+                            account</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com"
+                           id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"><i class="fa fa-inbox"></i> #{msjs['perfil.titulo']}</a>
+                        <h:form>
+                            <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                <a class="dropdown-item" href="#"><i class="fa fa-user mr-2"></i>#{login.username}</a>
+                                <a jsf:action="#{carritoBean.listar}" class="dropdown-item" href="#"><i class="fa fa-shopping-cart mr-2"></i>Ver Carrito de Compra</a>
+                                <a jsf:action="#{login.logout}" class="dropdown-item" href="#"><i class="fa fa-sign-out mr-2"></i>#{msjs['perfil.salir']}</a>
+                            </div>
+                        </h:form>                        
+                    </li>
+                </ul>
+                <h:form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text"
+                           placeholder="Search" aria-label="Search" />
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <h:inputHidden id="localeCode" pt:class="localeCode" value="#{language.currentLocaleCode}" />
+                    <h:selectOneMenu value="#{language.localeCode}" onchange="submit()"
+                                     valueChangeListener="#{language.countryLocaleCodeChanged}"
+                                     styleClass="custom-select ml-2 selectedLocaleCode" style="width: 150px;">
+                        <f:selectItems value="#{language.countriesInMap}" /> 
+                    </h:selectOneMenu>
+                </h:form>
+            </div>
+        </nav>
+
+        <div class="nav-scroller bg-white box-shadow">
+            <nav class="nav nav-underline">
+                <a class="nav-link active" href="#">Dashboard</a>
+                <a class="nav-link" href="#"> Friends <span class="badge badge-pill bg-light align-text-bottom">27</span></a>
+                <a class="nav-link" href="#">Explore</a>
+                <a class="nav-link" href="#">Suggestions</a> <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="#">Link</a> <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="#">Link</a> <a class="nav-link" href="#">Link</a>
+            </nav>
+        </div>
+    </ui:composition>
+</f:view>

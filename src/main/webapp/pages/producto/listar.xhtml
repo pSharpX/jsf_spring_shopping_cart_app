@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        locale="#{facesContext.externalContext.requestLocale}"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/shared/layout.xhtml">
+        <ui:define name="breadcrumb">
+            <h:form>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <h:commandLink value="#{msjs['operacion.principal']}" action="#{clienteBean.principal()}" />
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">#{msjs['operacion.listado']}</li>
+                    </ol>
+                </nav>
+            </h:form>
+        </ui:define>
+        <ui:define name="body">
+            <div class="my-3 p-3 bg-white rounded box-shadow">
+                <h6 class="border-bottom border-gray pb-2 mb-0"><i class="fa fa-database mr-2"></i>#{msjs['operacion.listado']}</h6>
+                <div class="pt-3">
+                    <h:panelGroup layout="block" rendered="#{productoBean.productos == null or productoBean.productos.size() == 0}">
+                        <div class="alert alert-danger" role="alert">#{msjsCliente['formulario.listar.message']}</div>
+                    </h:panelGroup>
+                    <h:form rendered="#{productoBean.productos != null and productoBean.productos.size() > 0}">
+                        <div class="card-columns">
+                            <ui:repeat value="#{productoBean.productos}" var="producto">
+                                <div class="card">
+                                    <h:graphicImage url="/resources/images/logoCibertec.jpg" styleClass="card-img-top" alt="Card image cap" />
+                                    <div class="card-body">
+                                        <h5 class="card-title">#{producto.nombre}</h5>
+                                        <p class="card-text">#{producto.descripcion}</p>
+                                        <p class="card-text">#{producto.precio}</p>
+                                        <p class="card-text">#{producto.categoria}</p>
+                                        <h:commandLink value="#{msjsCliente['formulario.boton']}"
+                                                         action="#{productoBean.mostrar(producto.id)}"
+                                                         styleClass="d-none btn btn-primary" />
+                                        <h:commandLink value="#{msjsCliente['formulario.boton']}"
+                                                       action="#{productoBean.editar(producto.id)}"
+                                                       styleClass="d-none btn btn-primary" />
+                                        <a jsf:action="#{productoBean.mostrar(producto.id)}" class="btn btn-primary btn-sm mr-2" href="#" role="button">
+                                            <i class="fa fa-angle-double-left"></i>
+                                        </a>
+                                        <a jsf:action="#{carritoBean.seleccionarItem(producto.id)}" class="btn btn-warning btn-sm mr-2" href="#" role="button">
+                                            <i class="fa fa-cart-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</f:view>

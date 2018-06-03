@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        locale="#{facesContext.externalContext.requestLocale}"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/shared/layout.xhtml">
+        <ui:define name="breadcrumb">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">#{msjs['operacion.principal']}</li>                    
+                </ol>
+            </nav>
+        </ui:define>
+        <ui:define name="body">
+            <div class="my-3 p-3 bg-white rounded box-shadow">
+                <h6 class="border-bottom border-gray pb-2 mb-0"><i class="fa fa-home mr-2"></i>#{msjs['operacion.principal']}</h6>
+                <h:form class="text-muted pt-3">
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                            <h1 class="display-4">
+                                <h:outputFormat value="#{msjs.mensaje_bienvenida}">
+                                    <f:param value="#{login.username}" />
+                                </h:outputFormat>
+                            </h1>
+                            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                            <hr class="my-4" />
+                            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                            <p class="lead">                                
+                                <a jsf:action="#{clienteBean.crear()}" class="btn btn-primary btn-lg" href="#" role="button">
+                                    <h:outputFormat value="#{msjs['enlace.nuevo']}">
+                                        <f:param value="#{msjs.modulo_cliente}" />
+                                    </h:outputFormat>
+                                    <i class="fa fa-plus-square ml-2"></i>
+                                </a>
+                            </p>
+                        </div>                        
+                    </div>
+                </h:form>                
+            </div>
+        </ui:define>
+    </ui:composition>
+</f:view>

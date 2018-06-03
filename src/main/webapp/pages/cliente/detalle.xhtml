@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        locale="#{facesContext.externalContext.requestLocale}"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/shared/layout.xhtml">
+        <ui:define name="breadcrumb">
+            <h:form>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <h:commandLink value="#{msjs['operacion.principal']}" action="#{clienteBean.principal()}" />
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">#{msjs['operacion.detalle']}</li>
+                    </ol>
+                </nav>
+            </h:form>
+        </ui:define>
+        <ui:define name="body">
+            <div class="my-3 p-3 bg-white rounded box-shadow">
+                <h6 class="border-bottom border-gray pb-2 mb-0"><i class="fa fa-file-text mr-2"></i>#{msjs['operacion.detalle']}</h6>
+                <div class="pt-3">
+                    <h:panelGroup layout="block" rendered="#{clienteBean.cliente == null}">
+                        <div class="alert alert-danger" role="alert">#{msjsCliente['mensaje.cliente.error']}</div>
+                    </h:panelGroup>
+                    <h:form class="form" rendered="#{clienteBean.cliente != null}">
+                        <div class="form-group">
+                            <h:outputLabel value="#{msjsCliente['formulario.nombre']}:" for="nombre" />
+                            <h:inputText value="#{clienteBean.cliente.nombre}"
+                                         styleClass="form-control" id="nombre" pt:readonly="true"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="#{msjsCliente['formulario.apellido']}:" for="apellido" />
+                            <h:inputText value="#{clienteBean.cliente.apellido}"
+                                         styleClass="form-control" id="apellido" pt:readonly="true" />                            
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="#{msjsCliente['formulario.genero']}:" for="genero" />
+                            <h:selectOneRadio id="genero" value="#{clienteBean.cliente.genero}" pt:disabled="true">
+                                <f:selectItems value="#{listados.generos}" />
+                            </h:selectOneRadio>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="#{msjsCliente['formulario.profesion']}:" for="profesion" />
+                            <h:selectOneListbox id="profesion" value="#{clienteBean.cliente.profesion}" size="1" 
+                                                styleClass="custom-select" pt:disabled="true">
+                                <f:selectItems value="#{listados.profesiones}" class="custom-select" />
+                            </h:selectOneListbox>
+                            <h:outputText value="#{clienteBean.mensaje}" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="#{msjsCliente['formulario.numeroMovil']}:" for="numeroMovil" />
+                            <h:inputText id="numeroMovil" value="#{clienteBean.cliente.numeroMovil}"
+                                         styleClass="form-control" pt:readonly="true" />                            
+                        </div>
+
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <h:selectBooleanCheckbox id="publicidad"
+                                                         styleClass="custom-control-input" pt:disabled="true"
+                                                         value="#{clienteBean.cliente.publicidad}" />
+                                <h:outputLabel value="#{msjsCliente['formulario.publicidad']}"
+                                               for="publicidad" styleClass="custom-control-label" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="#{msjsCliente['formulario.correoElectronico']}:" for="email" />
+                            <h:inputText id="email" value="#{clienteBean.cliente.correo}"
+                                         styleClass="form-control" pt:type="email"
+                                         pt:readonly="true" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="#{msjsCliente['formulario.numeroDocumento']}:" for="numeroDocumento" />
+                            <h:inputText value="#{clienteBean.cliente.numeroDocumento}"
+                                         id="numeroDocumento" styleClass="form-control"
+                                         pt:readonly="true" />                            
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel for="cantidadHijos" value="#{msjsCliente['formulario.cantidadHijos']}:" />
+                            <h:inputText value="#{clienteBean.cliente.cantidadHijos}"
+                                         id="cantidadHijos" styleClass="form-control" pt:readonly="true" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="#{msjsCliente['formulario.fechaNacimiento']}:" for="fechaNacimiento" />
+                            <h:inputText value="#{clienteBean.cliente.fechaNacimiento}"
+                                         id="fechaNacimiento" styleClass="form-control"
+                                         pt:readonly="true" />                            
+                        </div>
+                        
+                        <div class="form-group">
+                            <h:commandLink action="#{clienteBean.editar(clienteBean.cliente.codigo)}" immediate="true" class="btn btn-primary" role="button">
+                                <h:outputFormat value="#{msjs['enlace.editar']}">
+                                    <f:param value="#{msjs['modulo.cliente.singular']}" />
+                                </h:outputFormat>
+                                <i class="fa fa-edit ml-2"></i>                                
+                            </h:commandLink>
+                            <a jsf:action="#{clienteBean.listar()}" jsf:immediate="true" jsf:process="@none" class="btn btn-info ml-2" href="#" role="button">
+                                <i class="fa fa-chevron-left mr-2"></i>#{msjs['enlace.volver']}
+                            </a>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</f:view>

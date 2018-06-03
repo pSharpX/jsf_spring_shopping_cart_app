@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        locale="#{facesContext.externalContext.requestLocale}"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/shared/layout.xhtml">
+        <ui:define name="breadcrumb">
+            <h:form>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><h:commandLink
+                                value="#{msjs['operacion.principal']}"
+                                action="#{productoBean.principal()}" /></li>
+                        <li class="breadcrumb-item active" aria-current="page">#{msjs['operacion.registro']}</li>
+                    </ol>
+                </nav>
+            </h:form>
+        </ui:define>
+        <ui:define name="body">
+            <div class="my-3 p-3 bg-white rounded box-shadow">
+                <h6 class="border-bottom border-gray pb-2 mb-0">
+                    <i class="fa fa-plus-square mr-2"></i>
+                    <h:outputFormat value="#{msjs['enlace.nuevo']}">
+                        <f:param value="Producto" />
+                    </h:outputFormat>
+                </h6>
+                <div class="pt-3">
+                    <h:form id="product_form" class="needs-validation"
+                            pt:novalidate="true">
+                        <h:messages globalOnly="true" styleClass="d-block" errorClass="alert alert-danger" warnClass="alert alert-warning" infoClass="alert alert-info" />
+                        <div class="form-group">
+                            <h:outputLabel value="Nombre:"
+                                           for="nombre" />
+                            <h:inputText value="#{productoBean.producto.nombre}"
+                                         styleClass="form-control #{productoBean.nombreInputValid ? 'is-valid': 'is-invalid'}"
+                                         pt:required="true" id="nombre"
+                                         pt:placeholder="Nombre"
+                                         pt:aria-describedby="nombreHelp" />
+                            <small id="nombreHelp" class="form-text text-muted">We'll
+                                never share your email with anyone else.</small>
+                            <h:message errorClass="d-block invalid-feedback" for="nombre" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Descripcion:"
+                                           for="descripcion" />
+                            <h:inputText value="#{productoBean.producto.descripcion}"
+                                         styleClass="form-control #{productoBean.descripcionInputValid ? 'is-valid': 'is-invalid'}"
+                                         pt:required="true" id="descripcion"
+                                         pt:placeholder="Descripcion"
+                                         pt:aria-describedby="apellidoHelp">
+                                <f:validateLength maximum="150" />
+                            </h:inputText>
+                            <small id="apellidoHelp" class="form-text text-muted">We'll
+                                never share your email with anyone else.</small>
+                            <h:message errorClass="d-block invalid-feedback" for="descripcion" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Categoria:"
+                                           for="categoria" />
+                            <h:selectOneListbox id="categoria"
+                                                value="#{productoBean.producto.idCategoria}" size="1"
+                                                styleClass="custom-select">
+                                <f:selectItems value="#{listados.categorias}" />
+                            </h:selectOneListbox>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Precio:"
+                                           for="precio" />
+                            <h:inputText id="precio"
+                                         value="#{productoBean.producto.precio}"
+                                         styleClass="form-control #{productoBean.precioInputValid ? 'is-valid': 'is-invalid'}"
+                                         pt:type="number" pt:min="0"
+                                         pt:placeholder="Precio">
+                            </h:inputText>
+                            <h:message errorClass="d-block invalid-feedback"
+                                       for="precio" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Imagen:"
+                                           for="imagen" />
+                            <h:inputText id="imagen"
+                                         pt:type="file"
+                                         pt:data-preview-file-type="image"
+                                         pt:placeholder="Precio">
+                            </h:inputText>
+                        </div>
+
+                        <div class="form-group">
+                            <h:commandButton value="#{msjsCliente['formulario.boton']}"
+                                             action="#{productoBean.guardar(productoBean.producto)}"
+                                             styleClass="d-none btn btn-primary" />
+                            <button type="submit"
+                                    jsf:action="#{productoBean.guardar(productoBean.producto)}"
+                                    jsf:process="@form" class="btn btn-primary">
+                                #{msjsCliente['formulario.boton']}<i class="fa fa-save ml-2"></i>
+                            </button>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</f:view>
