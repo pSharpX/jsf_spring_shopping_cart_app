@@ -28,10 +28,10 @@ and open the template in the editor.
             <div class="my-3 p-3 bg-white rounded box-shadow">
                 <h6 class="border-bottom border-gray pb-2 mb-0"><i class="fa fa-edit mr-2"></i>#{msjs['operacion.actualizacion']}</h6>
                 <div class="pt-3">
-                    <h:panelGroup layout="block" rendered="#{carritoBean.detalleCarritoModel == null}">
+                    <h:panelGroup layout="block" rendered="#{carritoBean.detalleCarritoDto == null}">
                         <div class="alert alert-danger" role="alert">#{msjsCliente['mensaje.cliente.error']}</div>
                     </h:panelGroup>
-                    <h:form id="cart_form" rendered="#{carritoBean.detalleCarritoModel != null}" class="needs-validation" pt:novalidate="true">
+                    <h:form id="cart_form" rendered="#{carritoBean.detalleCarritoDto != null}" class="needs-validation" pt:novalidate="true">
                         <h:messages globalOnly="true" styleClass="d-block" errorClass="alert alert-danger" warnClass="alert alert-warning" infoClass="alert alert-info" />
                         <div class="card">
                             <h:graphicImage url="/resources/images/logoCibertec.jpg" styleClass="card-img-top" alt="Card image cap" />
@@ -40,19 +40,19 @@ and open the template in the editor.
                         <div class="form-group">
                             <h:outputLabel value="Producto:"
                                            for="producto" />
-                            <h:inputText value="#{carritoBean.detalleCarritoModel.producto}"
+                            <h:inputText value="#{carritoBean.detalleCarritoDto.producto}"
                                          styleClass="form-control"
                                          id="producto"
                                          pt:placeholder="Producto"
                                          pt:readonly="true"
                                          pt:aria-describedby="nombreHelp" />
-                            <h:inputHidden value="#{carritoBean.detalleCarritoModel.idProducto}" id="idProducto"/>
+                            <h:inputHidden value="#{carritoBean.detalleCarritoDto.idProducto}" id="idProducto"/>
                         </div>
 
                         <div class="form-group">
                             <h:outputLabel value="Precio:"
                                            for="precio" />
-                            <h:inputText value="#{carritoBean.detalleCarritoModel.precioUnitario}"
+                            <h:inputText value="#{carritoBean.detalleCarritoDto.precioUnitario}"
                                          styleClass="form-control #{carritoBean.precioInputValid ? 'is-valid': 'is-invalid'}"
                                          pt:required="true" id="precio"
                                          pt:placeholder="Precio"
@@ -68,7 +68,7 @@ and open the template in the editor.
                             <h:outputLabel value="Cantidad:"
                                            for="cantidad" />
                             <h:inputText id="cantidad"
-                                         value="#{carritoBean.detalleCarritoModel.cantidad}"
+                                         value="#{carritoBean.detalleCarritoDto.cantidad}"
                                          styleClass="form-control #{carritoBean.cantidadInputValid ? 'is-valid': 'is-invalid'}"
                                          pt:required="true"
                                          pt:type="number" pt:min="1"
@@ -80,8 +80,8 @@ and open the template in the editor.
 
                         <div class="form-group">
                             <h:commandButton value="Agregar"
-                                             action="#{carritoBean.agregarItem(carritoBean.detalleCarritoModel)}" styleClass="d-none btn btn-primary" />
-                            <button type="submit" jsf:action="#{carritoBean.agregarItem(carritoBean.detalleCarritoModel)}" jsf:process="@form" class="btn btn-primary mr-2">
+                                             action="#{carritoBean.agregarItem(carritoBean.detalleCarritoDto)}" styleClass="d-none btn btn-primary" />
+                            <button type="submit" jsf:action="#{carritoBean.agregarItem(carritoBean.detalleCarritoDto)}" jsf:process="@form" class="btn btn-primary mr-2">
                                 Agregar <i class="fa fa-cart-plus ml-2"></i>
                             </button>
                             <a jsf:action="#{productoBean.listar()}" jsf:immediate="true" jsf:process="@none" class="btn btn-danger" href="#" role="button">

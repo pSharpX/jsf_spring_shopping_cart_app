@@ -1,14 +1,15 @@
 package pe.edu.cibertec.managed;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import javax.faces.context.FacesContext;
 
 /**
  * Created by CHRISTIAN on 20/04/2018.
  */
-@ManagedBean
-@RequestScoped
+@Component
+@Scope("request")
 public class ErrorHandlerBean {
 
     public String getStatusCode(){

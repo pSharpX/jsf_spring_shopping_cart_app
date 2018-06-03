@@ -1,5 +1,8 @@
 package pe.edu.cibertec.managed;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import pe.edu.cibertec.dto.CarritoCompraDto;
 import pe.edu.cibertec.dto.DetalleCarritoDto;
 import pe.edu.cibertec.dto.ProductoDto;
@@ -9,8 +12,6 @@ import pe.edu.cibertec.servicio.ProductoServicio;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
@@ -23,33 +24,36 @@ import java.util.function.ToDoubleFunction;
 /**
  * Created by CHRISTIAN on 15/04/2018.
  */
-@ManagedBean(name = "carritoBean")
-@SessionScoped
+@Component
+@Scope(value = "session")
 public class CarritoBean {
 
     private String mensaje;
-    private CarritoCompraDto carritoModel = new CarritoCompraDto();
-    private DetalleCarritoDto detalleCarritoModel = new DetalleCarritoDto();
-    private List<DetalleCarritoDto> detalleCarritoModels;
+    private CarritoCompraDto carritoCompraDto = new CarritoCompraDto();
+    private DetalleCarritoDto detalleCarritoDto = new DetalleCarritoDto();
+    private List<DetalleCarritoDto> collection;
 
+    @Autowired
     private CarritoCompraServicio carritoService;
 
+    @Autowired
     private DetalleCarritoServicio detalleCarritoService;
 
+    @Autowired
     private ProductoServicio productoService;
 
     @PostConstruct
     public void init() {
-        this.carritoModel.setUsuario(this.getUsuario());
-        detalleCarritoModels = new ArrayList<>();
+        this.carritoCompraDto.setUsuario(this.getUsuario());
+        collection = new ArrayList<>();
     }
 
     public String listar(){
         try{
-            if(detalleCarritoModels != null && detalleCarritoModels.size() > 0){
-                this.carritoModel.setDetalleCarrito(this.detalleCarritoModels);
+            if(collection != null && collection.size() > 0){
+                this.carritoCompraDto.setDetalleCarrito(this.collection);
                 ToDoubleFunction<DetalleCarritoDto> calcSubTotal = d -> d.getPrecioUnitario() * d.getCantidad();
-                this.carritoModel.setTotal(this.carritoModel.getDetalleCarrito().stream().mapToDouble(calcSubTotal).sum());
+                this.carritoCompraDto.setTotal(this.carritoCompraDto.getDetalleCarrito().stream().mapToDouble(calcSubTotal).sum());
             }
             return "cart_list";
         }catch (Exception ex){
@@ -64,13 +68,13 @@ public class CarritoBean {
 
     public String seleccionarItem(Long idProducto){
         try{
-            ProductoDto productoModel = this.productoService.buscar(idProducto);
-            if(productoModel == null)
+            ProductoDto productoDto = this.productoService.buscar(idProducto);
+            if(productoDto == null)
                 throw new Exception("Product not found");
-            detalleCarritoModel.setProductoId(productoModel.getId());
-            detalleCarritoModel.setProducto(productoModel.getNombre());
-            detalleCarritoModel.setCantidad(1);
-            detalleCarritoModel.setPrecioUnitario(productoModel.getPrecio());
+            detalleCarritoDto.setProductoId(productoDto.getId());
+            detalleCarritoDto.setProducto(productoDto.getNombre());
+            detalleCarritoDto.setCantidad(1);
+            detalleCarritoDto.setPrecioUnitario(productoDto.getPrecio());
             return "cart_add";
         }catch (Exception ex){
             FacesMessage fm = new FacesMessage(
@@ -108,10 +112,10 @@ public class CarritoBean {
         }
     }
 
-    public String agregarItem(DetalleCarritoDto detalleCarritoModel){
+    public String agregarItem(DetalleCarritoDto detalleCarritoDto){
         try {
-            addItemToShoppingCart(detalleCarritoModel);
-            this.detalleCarritoModel = new DetalleCarritoDto();
+            addItemToShoppingCart(detalleCarritoDto);
+            this.detalleCarritoDto = new DetalleCarritoDto();
             return "product_list";
         }catch (Exception ex){
             FacesMessage fm = new FacesMessage(
@@ -123,17 +127,17 @@ public class CarritoBean {
         }
     }
 
-    private void addItemToShoppingCart(DetalleCarritoDto detalleCarritoModel){
-        Predicate<DetalleCarritoDto> predicate = (d) -> d.getProductoId() == detalleCarritoModel.getProductoId();
-        if(this.detalleCarritoModels.stream().anyMatch(predicate)){
+    private void addItemToShoppingCart(DetalleCarritoDto detalleCarritoDto){
+        Predicate<DetalleCarritoDto> predicate = (d) -> d.getProductoId() == detalleCarritoDto.getProductoId();
+        if(this.collection.stream().anyMatch(predicate)){
             Consumer<DetalleCarritoDto> consumer = (DetalleCarritoDto d) -> {
-                if(d.getProductoId() == detalleCarritoModel.getProductoId()){
-                    d.setCantidad(d.getCantidad() + detalleCarritoModel.getCantidad());
+                if(d.getProductoId() == detalleCarritoDto.getProductoId()){
+                    d.setCantidad(d.getCantidad() + detalleCarritoDto.getCantidad());
                 }
             };
-            this.detalleCarritoModels.forEach(consumer);
+            this.collection.forEach(consumer);
         }else{
-            this.detalleCarritoModels.add(detalleCarritoModel);
+            this.collection.add(detalleCarritoDto);
         }
     }
 
@@ -145,28 +149,28 @@ public class CarritoBean {
         this.mensaje = mensaje;
     }
 
-    public CarritoCompraDto getCarritoModel() {
-        return carritoModel;
+    public CarritoCompraDto getCarritoCompraDto() {
+        return carritoCompraDto;
     }
 
-    public void setCarritoModel(CarritoCompraDto carritoModel) {
-        this.carritoModel = carritoModel;
+    public void setCarritoCompraDto(CarritoCompraDto carritoCompraDto) {
+        this.carritoCompraDto = carritoCompraDto;
     }
 
-    public List<DetalleCarritoDto> getDetalleCarritoModels() {
-        return detalleCarritoModels;
+    public List<DetalleCarritoDto> getCollection() {
+        return collection;
     }
 
-    public void setDetalleCarritoModels(List<DetalleCarritoDto> detalleCarritoModels) {
-        this.detalleCarritoModels = detalleCarritoModels;
+    public void setCollection(List<DetalleCarritoDto> collection) {
+        this.collection = collection;
     }
 
-    public DetalleCarritoDto getDetalleCarritoModel() {
-        return detalleCarritoModel;
+    public DetalleCarritoDto getDetalleCarritoDto() {
+        return detalleCarritoDto;
     }
 
-    public void setDetalleCarritoModel(DetalleCarritoDto detalleCarritoModel) {
-        this.detalleCarritoModel = detalleCarritoModel;
+    public void setDetalleCarritoDto(DetalleCarritoDto detalleCarritoDto) {
+        this.detalleCarritoDto = detalleCarritoDto;
     }
 
     private String getUsuario(){

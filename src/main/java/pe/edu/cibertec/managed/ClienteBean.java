@@ -10,12 +10,14 @@ import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import pe.edu.cibertec.dto.UsuarioDto;
 import pe.edu.cibertec.servicio.UsuarioServicio;
 
@@ -23,9 +25,8 @@ import pe.edu.cibertec.servicio.UsuarioServicio;
  *
  * @author Java-LM
  */
-// @Named("clienteBean")
-@ManagedBean(name = "clienteBean")
-@SessionScoped
+@Component
+@Scope(value = "session")
 public class ClienteBean {
 
 	private static final String HTTP_GET = "GET";
@@ -38,6 +39,7 @@ public class ClienteBean {
 	private String mensaje;
 	private List<UsuarioDto> clientes;
 
+	@Autowired
 	private UsuarioServicio dao;
 
 	@PostConstruct

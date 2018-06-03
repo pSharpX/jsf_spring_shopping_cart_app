@@ -5,12 +5,13 @@
  */
 package pe.edu.cibertec.managed;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import pe.edu.cibertec.servicio.UsuarioServicio;
 
 import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 
@@ -18,13 +19,14 @@ import javax.faces.context.FacesContext;
  *
  * @author Java-LM
  */
-@ManagedBean(name = "login")
-@SessionScoped
+@Component(value = "login")
+@Scope(value = "session")
 public class LoginBean {
 
     private String username;
     private String password;
 
+    @Autowired
     private UsuarioServicio usuarioService;
 
     public static final String HOME_PAGE_REDIRECT = "home";

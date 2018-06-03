@@ -5,12 +5,13 @@
  */
 package pe.edu.cibertec.managed;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
@@ -18,8 +19,8 @@ import javax.faces.event.ValueChangeEvent;
  *
  * @author CHRISTIAN
  */
-@ManagedBean(name = "language")
-@SessionScoped
+@Component
+@Scope(value = "session")
 public class LanguageBean implements Serializable {
 
     private static final long serialVersionUID = 1L;

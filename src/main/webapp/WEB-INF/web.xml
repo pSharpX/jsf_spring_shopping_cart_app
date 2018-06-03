@@ -27,6 +27,13 @@
 		<description>ServletContextListener</description>
 		<listener-class>pe.edu.cibertec.listener.ApplicationListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring-ctx.xml</param-value>
+	</context-param>
 	<servlet>
 		<servlet-name>Jersey REST Service</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>

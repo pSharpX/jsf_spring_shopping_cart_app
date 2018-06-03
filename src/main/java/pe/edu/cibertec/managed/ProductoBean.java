@@ -1,30 +1,30 @@
 package pe.edu.cibertec.managed;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import pe.edu.cibertec.dto.ProductoDto;
 import pe.edu.cibertec.servicio.ProductoServicio;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import java.util.Collection;
 
 /**
  * Created by CHRISTIAN on 15/04/2018.
  */
-@ManagedBean(name = "productoBean")
-@SessionScoped
-@Transactional
+@Component
+@Scope(value = "session")
 public class ProductoBean {
 
     private ProductoDto producto = new ProductoDto();
     private String mensaje;
     private Collection<ProductoDto> productos;
 
+    @Autowired
     private ProductoServicio productoService;
 
     @PostConstruct

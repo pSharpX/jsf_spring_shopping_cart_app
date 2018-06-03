@@ -5,6 +5,9 @@
  */
 package pe.edu.cibertec.managed;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import pe.edu.cibertec.dto.CategoriaDto;
 import pe.edu.cibertec.servicio.CategoriaServicio;
 
@@ -13,22 +16,21 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
 import javax.faces.model.SelectItem;
 
 /**
  *
  * @author Java-LM
  */
-@ManagedBean(name = "listados")
-@ApplicationScoped
+@Component(value = "listados")
+@Scope(value = "singleton")
 public class ListadoBean {
     
     private List<SelectItem> generos;
     private List<SelectItem> profesiones;
     private Collection<SelectItem> categorias;
 
+    @Autowired
     private CategoriaServicio categoriaService;
 
     @PostConstruct

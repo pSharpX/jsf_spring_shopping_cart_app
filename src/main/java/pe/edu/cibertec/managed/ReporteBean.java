@@ -5,7 +5,9 @@
  */
 package pe.edu.cibertec.managed;
 
-import javax.faces.bean.ManagedBean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import javax.faces.event.ActionEvent;
 
 /**
@@ -13,7 +15,8 @@ import javax.faces.event.ActionEvent;
  * @author Java-LM
  */
 
-@ManagedBean(name = "reporte")
+@Component(value = "reporte")
+@Scope(value = "request")
 public class ReporteBean {
     
     private String tipo;

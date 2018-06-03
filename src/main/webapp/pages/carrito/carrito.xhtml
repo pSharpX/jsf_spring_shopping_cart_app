@@ -28,10 +28,10 @@ and open the template in the editor.
             <div class="my-3 p-3 bg-white rounded box-shadow">
                 <h6 class="border-bottom border-gray pb-2 mb-0"><i class="fa fa-database mr-2"></i>#{msjs['operacion.listado']}</h6>
                 <div class="pt-3">
-                    <h:panelGroup layout="block" rendered="#{carritoBean.carritoModel == null or carritoBean.carritoModel.detalleCarrito.size() == 0}">
+                    <h:panelGroup layout="block" rendered="#{carritoBean.carritoCompraDto == null or carritoBean.carritoCompraDto.detalleCarrito.size() == 0}">
                         <div class="alert alert-danger" role="alert">#{msjsCliente['formulario.listar.message']}</div>
                     </h:panelGroup>
-                    <h:form rendered="#{carritoBean.carritoModel != null and carritoBean.carritoModel.detalleCarrito.size() > 0}">
+                    <h:form rendered="#{carritoBean.carritoCompraDto != null and carritoBean.carritoCompraDto.detalleCarrito.size() > 0}">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -43,7 +43,7 @@ and open the template in the editor.
                                 </tr>
                             </thead>
                             <tbody>
-                                <ui:repeat value="#{carritoBean.carritoModel.detalleCarrito}" var="detalle">
+                                <ui:repeat value="#{carritoBean.carritoCompraDto.detalleCarrito}" var="detalle">
                                     <tr>
                                         <td class="col-sm-8 col-md-6">
                                             <div class="media">
@@ -81,12 +81,12 @@ and open the template in the editor.
                                 <tr>
                                     <td colspan="3"></td>
                                     <td><h5>Subtotal</h5></td>
-                                    <td class="text-right"><h5><strong>$#{carritoBean.carritoModel.total}</strong></h5></td>
+                                    <td class="text-right"><h5><strong>$#{carritoBean.carritoCompraDto.total}</strong></h5></td>
                                 </tr>
                                 <tr>
                                     <td colspan="3"></td>
                                     <td><h3>Total</h3></td>
-                                    <td class="text-right"><h3><strong>$#{carritoBean.carritoModel.total}</strong></h3></td>
+                                    <td class="text-right"><h3><strong>$#{carritoBean.carritoCompraDto.total}</strong></h3></td>
                                 </tr>
                                 <tr>
                                     <td colspan="3"></td>
